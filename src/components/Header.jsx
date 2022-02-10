@@ -13,7 +13,7 @@ const Header = () => {
   <div className='Header'>
     <h1 style={{color}}>ReactHooks</h1>
     <button onClick={handleClick} type='button'>
-        {darkMode ? 'Dark Mode' : 'Light Mode'}
+        {darkMode ?  'Dark Mode' : 'Light Mode'}
     </button>
   </div>
   );
