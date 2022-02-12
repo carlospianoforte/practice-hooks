@@ -33,19 +33,34 @@ const Characters = () => {
     }, []);
 
     const handleClick = favorite =>{
-        dispatch({type: 'ADD_FAVORITE', payload: favorite});
+        if(!favorites.favorites.includes(favorite)){
+            dispatch({type: 'ADD_FAVORITE', payload: favorite});
+        }else{
+            alert("personaje repetido")
+        }
+        
     }
+
+      const handleDelete = favorite =>{
+        dispatch({type: 'REMOVE_FAVORITE', payload: favorite});
+    }  
 
   return (
     <>
-    <div className='Characters'>
-        <div className="character_card">
+    <div className='Characters2'>
+        <div className="character_favorites">
 
     {favorites.favorites.map(favorite => (
         <div className='character_card' key={favorite.id}>
                  <div className='titles'>
                     <h2>{favorite.name}</h2>
                     <h3>{favorite.species}</h3>
+
+                     { favorites.favorites.length >=1 ? 
+                    <button type='button' onClick={()=> handleDelete(favorite.id)}>
+                        Remove Favorites
+                     {console.log(favorite.id)}
+                    </button> : null} 
 
                 </div>
 
@@ -70,6 +85,8 @@ const Characters = () => {
                     <button type='button' onClick={()=> handleClick(character)}>
                         Add Favorites
                     </button>
+               
+
                 </div>
                 <div className='image_container'>
                     <img className='character_image' src={character.image} alt="imagen" />
