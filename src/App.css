@@ -111,4 +111,25 @@
   object-fit: contain;
 }
 
+.Search{
+  align-items: center;
+  justify-content: center;
+  padding-top: 1rem;
+
+
+}
+
+.input{
+  align-items: center;
+  justify-content: center;
+  border-radius: 25px;
+  font-size: 16px;
+  border: 2px solid #213969;
+  outline: none;
+/*   background-color: rgba(255, 255, 255, 0.1);
+ */  width: 50%;
+  height: 2rem;
+  font-family: 'Multiple', sans-serif;
+    
+}
 
