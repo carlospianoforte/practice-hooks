@@ -1,9 +1,14 @@
-import React, {useState, useEffect, useReducer, useMemo} from 'react';
+import React, {useState, useReducer, useMemo, useRef, useCallback} from 'react';
 import '../App.css';
+import Search from './Search';
+import useCharacters from '../hooks/useCharacters';
 
 const intitialState = {
     favorites: []
 }
+
+const API='https://rickandmortyapi.com/api/character/'
+        
 
 const favoriteReducer=(state, action) => {
     switch(action.type) {
@@ -23,15 +28,11 @@ const favoriteReducer=(state, action) => {
 }
 
 const Characters = () => {
-    const [characters, setCharacters] = useState([]);
     const [favorites, dispatch] = useReducer(favoriteReducer, intitialState);
     const [search, setSearch] = useState('');
+    const searchInput = useRef(null);
 
-    useEffect(() => {
-        fetch('https://rickandmortyapi.com/api/character/')  
-            .then(response => response.json())
-            .then(data => setCharacters(data.results))
-    }, []);
+    const characters = useCharacters(API);
 
     const handleClick = favorite =>{
         if(!favorites.favorites.includes(favorite)){
@@ -44,11 +45,15 @@ const Characters = () => {
 
       const handleDelete = favorite =>{
         dispatch({type: 'REMOVE_FAVORITE', payload: favorite});
-    }  
-
-    const handleSearch = event => {
-        setSearch(event.target.value);
     }
+    
+    const handleSearch = useCallback (() => {
+        setSearch(searchInput.current.value);
+    }, []);
+
+/*     const handleSearch = () => {
+        setSearch(searchInput.current.value);
+    } */
 
 /*     const filteredUsers = characters.filter((user) => {
         return user.name.toLowerCase().includes(search.toLowerCase());
@@ -65,9 +70,11 @@ const Characters = () => {
   return (
     <>
 
-    <div className="Search">
-        <input type="text" className='input'  placeholder="Buscar..." value={search} onChange={handleSearch}/>
-    </div>
+    <Search 
+        search={search} 
+        searchInput={searchInput}
+        handleSearch={handleSearch}
+    />
 
     <div className='Characters2'>
         <div className="character_favorites">
